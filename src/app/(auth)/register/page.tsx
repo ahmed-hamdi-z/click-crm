@@ -1,9 +1,11 @@
+"use client";
+
+// Components
+import { RegisterCard } from "@/features/auth/components/register-card";
+
 const Register = () => {
-    return (
-        <div>
-            Register
-        </div>
-    )
+    
+    return <RegisterCard />
 }
 
 export default Register;

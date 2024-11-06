@@ -1,3 +1,5 @@
+"use client"
+// Components 
 import { LoginCard } from "@/features/auth/components/login-card";
 
 const Login = () => {

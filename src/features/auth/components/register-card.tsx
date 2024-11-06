@@ -5,16 +5,16 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Components 
-import { DottedSeparator } from "@/components/dotted-separator";
-import { Button } from "@/components/ui/button";
+import { DottedSeparator } from "@/components/dotted-separator"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import {
   Form,
   FormControl,
@@ -29,14 +29,17 @@ import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 
 const formSchema = z.object({
+  name: z.string().trim().min(1, "required"),
   email: z.string().email(),
-  password: z.string().min(1, "Required")
+  password: z.string().min(8, "Minimum 8 Characters Required")
 })
 
-export const LoginCard = () => {
+export const RegisterCard = () => {
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: ""
     }
@@ -50,8 +53,18 @@ export const LoginCard = () => {
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex items-center justify-center text-center p-7">
         <CardTitle className="text-2xl">
-          Welcome back!
+          Sgin Up
         </CardTitle>
+        <CardDescription>
+          By signing up, you agree to our {" "}
+          <Link href="/privacy">
+            <span className="text-blue-700">Privacy Policy</span>
+          </Link>{" "}
+          and {" "}
+          <Link href="/terms">
+            <span className="text-blue-700">Terms of Service</span>
+          </Link>{" "}
+        </CardDescription>
       </CardHeader>
       <div className="px-7">
         <DottedSeparator className="" />
@@ -59,6 +72,23 @@ export const LoginCard = () => {
       <CardContent className="p-7">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" >
+
+            <FormField
+              name="name"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Enter your Name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               name="email"
               control={form.control}
@@ -75,6 +105,7 @@ export const LoginCard = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               name="password"
               control={form.control}
@@ -83,7 +114,7 @@ export const LoginCard = () => {
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder="Enter password"
+                      placeholder="Enter Password"
                       {...field}
                     />
                   </FormControl>
@@ -91,10 +122,8 @@ export const LoginCard = () => {
                 </FormItem>
               )}
             />
-            <Button
-              className="w-full"
-              disabled={false}
-              size="lg">
+
+            <Button className="w-full" disabled={false} size="lg">
               Login
             </Button>
           </form>
@@ -128,9 +157,9 @@ export const LoginCard = () => {
       </div>
       <CardContent className="p-7 flex items-center justify-center">
         <p>
-          Don&apos;t have an account?
-          <Link href="/register">
-           <span className="text-blue-700">&nbsp;Sign Up</span> 
+          Already have an account?
+          <Link href="/login">
+           <span className="text-blue-700">&nbsp;Sign In</span> 
           </Link>
         </p>
       </CardContent>
