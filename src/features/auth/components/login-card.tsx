@@ -1,8 +1,8 @@
 // Hooks
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 // Components 
 import { DottedSeparator } from "@/components/dotted-separator";
@@ -28,22 +28,24 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, "Required")
-})
+import { loginSchema } from "../schemas";
+import { useLogin } from "../api/use-login";
+
 
 export const LoginCard = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+
+  const { mutate } = useLogin();
+  
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: ""
     }
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log({ values })
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    mutate(values)
   }
 
   return (
@@ -130,7 +132,7 @@ export const LoginCard = () => {
         <p>
           Don&apos;t have an account?
           <Link href="/register">
-           <span className="text-blue-700">&nbsp;Sign Up</span> 
+            <span className="text-blue-700">&nbsp;Sign Up</span>
           </Link>
         </p>
       </CardContent>

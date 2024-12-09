@@ -1,4 +1,5 @@
-// Seoarator Props
+
+// Separator Props
 export interface DottedSeparatorProps {
     className: string;
     color?: string;

@@ -1,20 +1,20 @@
 // Hooks
 import { useForm } from "react-hook-form";
-
-import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
 
 // Components 
-import { DottedSeparator } from "@/components/dotted-separator"
-import { Button } from "@/components/ui/button"
+import { DottedSeparator } from "@/components/dotted-separator";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
 import {
   Form,
   FormControl,
@@ -26,18 +26,17 @@ import {
 // Icons
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import Link from "next/link";
 
-const formSchema = z.object({
-  name: z.string().trim().min(1, "required"),
-  email: z.string().email(),
-  password: z.string().min(8, "Minimum 8 Characters Required")
-})
+import Link from "next/link";
+import { registerSchema } from "../schemas";
+import { useRegister } from "../api/use-register";
+
 
 export const RegisterCard = () => {
+  const { mutate } = useRegister();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -45,8 +44,8 @@ export const RegisterCard = () => {
     }
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log({ values })
+  const onSubmit = (values: z.infer<typeof registerSchema>) => {
+    mutate(values)
   }
 
   return (
@@ -124,7 +123,7 @@ export const RegisterCard = () => {
             />
 
             <Button className="w-full" disabled={false} size="lg">
-              Login
+              Register
             </Button>
           </form>
         </Form>
@@ -159,7 +158,7 @@ export const RegisterCard = () => {
         <p>
           Already have an account?
           <Link href="/login">
-           <span className="text-blue-700">&nbsp;Sign In</span> 
+            <span className="text-blue-700">&nbsp;Sign In</span>
           </Link>
         </p>
       </CardContent>
