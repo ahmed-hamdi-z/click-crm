@@ -1,9 +1,11 @@
+"use client";
+
 // Hooks
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 
-// Components 
+// Components
 import { DottedSeparator } from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +13,7 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
@@ -20,7 +22,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 
 // Icons
@@ -31,35 +33,32 @@ import Link from "next/link";
 import { registerSchema } from "../schemas";
 import { useRegister } from "../api/use-register";
 
-
 export const RegisterCard = () => {
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       email: "",
-      password: ""
-    }
+      password: "",
+    },
   });
 
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    mutate(values)
-  }
+    mutate(values);
+  };
 
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl">
-          Sgin Up
-        </CardTitle>
+        <CardTitle className="text-2xl">Sgin Up</CardTitle>
         <CardDescription>
-          By signing up, you agree to our {" "}
+          By signing up, you agree to our{" "}
           <Link href="/privacy">
             <span className="text-blue-700">Privacy Policy</span>
           </Link>{" "}
-          and {" "}
+          and{" "}
           <Link href="/terms">
             <span className="text-blue-700">Terms of Service</span>
           </Link>{" "}
@@ -70,8 +69,7 @@ export const RegisterCard = () => {
       </div>
       <CardContent className="p-7">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" >
-
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               name="name"
               control={form.control}
@@ -88,17 +86,14 @@ export const RegisterCard = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               name="email"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="Enter Email"
-                      {...field}
-                    />
+                    <Input type="email" placeholder="Enter Email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,11 +117,12 @@ export const RegisterCard = () => {
               )}
             />
 
-            <Button className="w-full" disabled={false} size="lg">
+            <Button className="w-full" disabled={isPending} size="lg">
               Register
             </Button>
           </form>
         </Form>
+        
       </CardContent>
       <div className="px-7">
         <DottedSeparator className="" />
@@ -136,7 +132,7 @@ export const RegisterCard = () => {
           className="w-full"
           variant="secondary"
           size="lg"
-          disabled={false}
+          disabled={isPending}
         >
           <FcGoogle className="mr-2 size-5" />
           Login With Google
@@ -145,7 +141,7 @@ export const RegisterCard = () => {
           className="w-full"
           variant="secondary"
           size="lg"
-          disabled={false}
+          disabled={isPending}
         >
           <FaGithub className="mr-2 size-5" />
           Login With Github
@@ -163,5 +159,5 @@ export const RegisterCard = () => {
         </p>
       </CardContent>
     </Card>
-  )
-}
+  );
+};

@@ -1,10 +1,14 @@
-"use client";
 
 // Components
 import { RegisterCard } from "@/features/auth/components/register-card";
+import { protectRoute } from "@/features/auth/server/actions";
 
-const Register = () => {
-    
+import { redirect } from "next/navigation";
+
+const Register = async () => {
+       const user = await protectRoute();
+        if (user) redirect('/');
+
     return <RegisterCard />
 }
 
