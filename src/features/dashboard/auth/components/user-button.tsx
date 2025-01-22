@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DottedSeparator } from "@/components/dotted-separator"
 
-import { useLogout } from "@/features/auth/api/use-logout"; 
-import { useCurrent } from "@/features/auth/api/use-current";
+import { useLogout } from "@/features/dashboard/auth/api/use-logout"; 
+import { useCurrent } from "@/features/dashboard/auth/api/use-current";
 
 
 export const UserButton = () => {

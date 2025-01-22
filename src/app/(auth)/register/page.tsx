@@ -1,7 +1,7 @@
 
 // Components
-import { RegisterCard } from "@/features/auth/components/register-card";
-import { protectRoute } from "@/features/auth/server/actions";
+import { RegisterCard } from "@/features/dashboard/auth/components/register-card";
+import { protectRoute } from "@/features/dashboard/auth/actions";
 
 import { redirect } from "next/navigation";
 

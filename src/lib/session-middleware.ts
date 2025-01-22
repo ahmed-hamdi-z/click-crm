@@ -15,7 +15,7 @@ type Users as UsersType,
 import { getCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
 
-import { AUTH_COOKIE } from "@/features/auth/constants";
+import { AUTH_COOKIE } from "@/features/dashboard/auth/constants";
 
 type AuthMiddlewareContext = {
     Variables: {
